@@ -1,381 +1,822 @@
-<html class="scroll-smooth" lang="es">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
-   Clan ORG
-  </title>
-  <meta content="Clan ORG" name="description"/>
-  <meta content="index,follow" name="robots"/>
-  <meta content="Clan ORG" name="keywords"/>
-  <meta content="Clan ORG" property="og:title"/>
-  <meta content="website" property="og:type"/>
-  <meta content="Clan ORG" property="og:description"/>
-  <meta content="https://placehold.co/600x315/png?text=Clan+ORG+OG+Image" property="og:image"/>
-  <meta content="image/png" property="og:image:type"/>
-  <meta content="200" property="og:image:width"/>
-  <meta content="120" property="og:image:height"/>
-  <meta content="https://cuevana3.rs" property="og:url"/>
-  <meta content="Clan ORG" property="og:site_name"/>
-  <meta content="#111010" name="theme-color"/>
-  <link href="https://cuevana3.rs" rel="canonical"/>
-  <link href="https://placehold.co/64x64/png?text=Clan+ORG+Icon" rel="apple-touch-icon"/>
-  <link href="https://placehold.co/64x64/png?text=Clan+ORG+Icon" rel="shortcut icon"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Clan Org</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
   <style>
-   body {
-      font-family: 'Inter', sans-serif;
-      background-color: #111010;
-      color: #e0e0e0;
+    @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap");
+    .neon-text {
+      font-family: "Orbitron", sans-serif;
+      color: #cce4ff;
+      text-shadow: 0 0 8px #cce4ff, 0 0 20px #cce4ff, 0 0 30px #cce4ff,
+        0 0 40px #1e40af, 0 0 70px #1e40af, 0 0 80px #1e40af, 0 0 100px #1e40af;
+      letter-spacing: 0.3em;
     }
-    /* Scrollbar for dark theme */
-    ::-webkit-scrollbar {
-      width: 12px;
-      height: 12px;
+    .neon-glow {
+      box-shadow: 0 0 6px #22ff22, 0 0 12px #22ff22, 0 0 18px #22ff22,
+        0 0 24px #22ff22;
     }
-    ::-webkit-scrollbar-track {
-      background: #1c1c1c;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .scrollbar-hide::-webkit-scrollbar {
+      display: none;
     }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(to top, #30cfd0 0%, #330867 100%);
-      border-radius: 10px;
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .scrollbar-hide {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
-    /* Marquee animation */
-    .marquee {
-      position: relative;
+    /* Fix body to prevent scrolling except grid */
+    body, html {
+      height: 100%;
+      margin: 0;
       overflow: hidden;
-      background-color: #111010;
-      color: #ffffff;
-      height: 2.5rem;
+    }
+    #app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    #top-section {
+      flex-shrink: 0;
+    }
+    #swiper {
+      flex-shrink: 0;
+      margin-bottom: 1rem;
+    }
+    #grid-container {
+      flex-grow: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(3, 120px);
+      grid-auto-rows: 200px;
+      gap: 1rem;
+      justify-content: center;
+      width: 100%;
+      max-width: 400px;
+    }
+    #pagination {
+      margin-top: 1rem;
       display: flex;
       align-items: center;
-      font-weight: 600;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: nowrap;
+      color: #22ff22;
+      font-weight: bold;
+      user-select: none;
+    }
+    #pagination button {
+      background-color: transparent;
+      color: #22ff22;
+      font-weight: bold;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      border: none;
+      font-size: 1.25rem;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #pagination button:disabled {
+      color: #555;
+      cursor: default;
+    }
+    #pagination span {
       font-size: 1rem;
     }
-    .marquee-content {
-      white-space: nowrap;
-      display: inline-block;
-      animation: marquee 27s linear infinite;
+    .count-badge {
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      background: #22ff22;
+      color: black;
+      font-weight: bold;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      user-select: none;
+      pointer-events: none;
+      min-width: 1.25rem;
+      text-align: center;
+      line-height: 1rem;
     }
-    @keyframes marquee {
-      0% {
-        transform: translateX(100%);
-      }
-      100% {
-        transform: translateX(-100%);
-      }
+    .btn-relative {
+      position: relative;
     }
   </style>
- </head>
- <body class="min-h-screen flex flex-col pt-6">
-  <!-- Marquee -->
-  <div class="marquee">
-   <div class="marquee-content">
-    Últimas novedades en Clan ORG • Películas, Series, Animes y Doramas en HD • ¡Disfruta la mejor experiencia de streaming!
-   </div>
-  </div>
-  <!-- Search -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-12">
-   <div class="max-w-xl mx-auto">
-    <input aria-label="Buscar títulos" autocomplete="off" class="w-full px-4 py-3 rounded-md border border-gray-700 bg-[#1c1c1c] text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent" id="searchInput" placeholder="Escribe para buscar títulos..." type="text"/>
-   </div>
-   <!-- Tabs -->
-   <div class="mt-10">
-    <div class="flex justify-center space-x-4 border-b border-gray-700">
-     <button aria-controls="panel-peliculas" aria-selected="true" class="tab-button py-2 px-4 text-cyan-400 border-b-2 border-cyan-400 font-semibold focus:outline-none" data-tab="peliculas" id="tab-peliculas" role="tab" tabindex="0">
-      PELÍCULAS
-     </button>
-     <button aria-controls="panel-series" aria-selected="false" class="tab-button py-2 px-4 text-gray-400 hover:text-cyan-400 focus:outline-none" data-tab="series" id="tab-series" role="tab" tabindex="-1">
-      SERIES
-     </button>
-     <button aria-controls="panel-animes" aria-selected="false" class="tab-button py-2 px-4 text-gray-400 hover:text-cyan-400 focus:outline-none" data-tab="animes" id="tab-animes" role="tab" tabindex="-1">
-      ANIMES
-     </button>
-     <button aria-controls="panel-doramas" aria-selected="false" class="tab-button py-2 px-4 text-gray-400 hover:text-cyan-400 focus:outline-none" data-tab="doramas" id="tab-doramas" role="tab" tabindex="-1">
-      DORAMAS
-     </button>
+</head>
+<body class="bg-[#121212] text-white">
+  <div id="app-container">
+    <div id="top-section">
+      <header class="flex justify-center mb-6 mt-4 relative">
+        <h1 class="neon-text text-4xl sm:text-5xl font-extrabold select-none">CLAN ORG</h1>
+      </header>
+
+      <!-- Swiper -->
+      <section class="relative overflow-hidden rounded-xl">
+        <div
+          id="swiper"
+          class="flex space-x-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory"
+          style="scroll-snap-type: x mandatory; width: 100%;"
+        ></div>
+      </section>
+
+      <!-- Navigation buttons -->
+      <nav class="mb-4 flex flex-wrap gap-3 justify-center">
+        <button
+          id="btnHome"
+          class="btn-relative neon-glow border border-transparent bg-black rounded-md px-6 py-3 font-semibold text-white hover:bg-gray-900 transition w-[120px] sm:w-auto"
+        >
+          Home
+          <span id="countHome" class="count-badge">0</span>
+        </button>
+        <button
+          id="btnPeliculas"
+          class="btn-relative neon-glow border border-transparent bg-black rounded-md px-6 py-3 font-semibold text-white relative w-[120px] sm:w-auto"
+        >
+          Películas
+          <span
+            id="countPeliculas"
+            class="count-badge"
+            >0</span
+          >
+        </button>
+        <button
+          id="btnSeries"
+          class="btn-relative neon-glow border border-transparent bg-black rounded-md px-6 py-3 font-semibold text-white relative w-[120px] sm:w-auto"
+        >
+          Series
+          <span
+            id="countSeries"
+            class="count-badge"
+            >0</span
+          >
+        </button>
+      </nav>
+
+      <!-- Search -->
+      <form class="mb-4" onsubmit="return false">
+        <input
+          id="searchInput"
+          class="w-full neon-glow border border-transparent bg-black rounded-md px-4 py-2 text-gray-400 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#22ff22]"
+          placeholder="Buscar películas y series..."
+          type="search"
+          autocomplete="off"
+        />
+      </form>
+
+      <!-- Filters -->
+      <form class="mb-6 flex flex-wrap gap-3 justify-center" onsubmit="return false">
+        <select
+          id="filterPlataforma"
+          class="neon-glow bg-black text-white rounded-md px-3 py-1 w-28 sm:w-28 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#22ff22]"
+        >
+          <option value="">Plataforma</option>
+        </select>
+        <select
+          id="filterGenero"
+          class="neon-glow bg-black text-white rounded-md px-3 py-1 w-28 sm:w-28 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#22ff22]"
+        >
+          <option value="">Género</option>
+        </select>
+        <select
+          id="filterAno"
+          class="neon-glow bg-black text-white rounded-md px-3 py-1 w-28 sm:w-28 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#22ff22]"
+        >
+          <option value="">Año</option>
+        </select>
+      </form>
     </div>
-    <!-- Tab Panels -->
-    <section aria-labelledby="tab-peliculas" class="tab-panel mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" id="panel-peliculas" role="tabpanel" tabindex="0">
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Pinocho (1940)" href="https://cuevana3.rs/pelicula/dumbo2019">
-      <img alt="Cartel de la película Pinocho (1940), elefante volador con orejas grandes en un circo colorido" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/sAluF7lNc4Mv3qxx1mmOgsfbr0C.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Pinocho (1940)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         7.1/10
-        </span>
-       </div>
+
+    <!-- Grid container with vertical scroll -->
+    <div id="grid-container">
+      <section id="grid"></section>
+      <div id="pagination" aria-label="Paginación" class="hidden">
+        <span id="pageInfo" aria-live="polite" class="sr-only"></span>
+        <button id="prevPage" aria-label="Página anterior" title="Página anterior" disabled>
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <span id="pageDisplay" aria-live="polite" class="text-green-500 font-bold select-none"></span>
+        <button id="nextPage" aria-label="Página siguiente" title="Página siguiente" disabled>
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Maléfica: Maestra del mal (2019)" href="https://cuevana3.rs/pelicula/malefica-maestra-del-mal">
-      <img alt="Cartel de la película Maléfica: Maestra del mal (2019), retrato oscuro de una mujer con cuernos y mirada intensa" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/eZOkXqHXWCKytd78TggAtJ0M3gU.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Maléfica: Maestra del mal (2019)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         7.303/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Aeon Flux (2005)" href="https://cuevana3.rs/pelicula/aeon-flux">
-      <img alt="Cartel de la película Aeon Flux (2005), mujer con traje negro futurista y fondo tecnológico" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/4Ysz1Fh5p9TWt2Mhtg5BUJzpR5J.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Aeon Flux (2005)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         5.6/10
-        </span>
-       </div>
-      </div>
-     </a>
-    </section>
-    <section aria-labelledby="tab-series" class="tab-panel hidden mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" id="panel-series" role="tabpanel" tabindex="0">
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="WWE: Unreal (2025)" href="https://cuevana3.rs/serie/wwe-unreal">
-      <img alt="Cartel de la serie WWE: Unreal (2025), luchadores en acción en un ring iluminado" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/4wfySL6AUTwXRCiL6tumMq9oFam.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        WWE: Unreal (2025)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         8.4/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="In the Eye of the Storm (2024)" href="https://cuevana3.rs/serie/in-the-eye-of-the-storm">
-      <img alt="Cartel de la serie In the Eye of the Storm (2024), paisaje tormentoso con silueta de persona" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/1rfA0TuQztxbFkt5RfS67ilQ4TS.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        In the Eye of the Storm (2024)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         7.9/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Jesus (2018-2019)" href="https://cuevana3.rs/serie/jesus">
-      <img alt="Cartel de la serie Jesus (2018-2019), retrato de Jesús con fondo luminoso y halo" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/9dkO9nB20g3lkiWgxj7jxg3QDFk.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Jesus (2018-2019)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         7.9/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="La jugada ganadora (2025)" href="https://cuevana3.rs/serie/la-jugada-ganadora">
-      <img alt="Cartel de la serie La jugada ganadora (2025), jugador de baloncesto lanzando a canasta" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/lGLMcZyPNNXVOaFZOAuMFrtYsH5.jpg" width="154"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        La jugada ganadora (2025)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         10/10
-        </span>
-       </div>
-      </div>
-     </a>
-    </section>
-    <section aria-labelledby="tab-animes" class="tab-panel hidden mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" id="panel-animes" role="tabpanel" tabindex="0">
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Lord of Mysteries (2025)" href="https://cuevana3.rs/anime/lord-of-mysteries">
-      <img alt="Cartel del anime Lord of Mysteries (2025), personaje misterioso con capa y fondo oscuro" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/cR5KiAdVeZLG4nDUiCyqfvGzZ3f.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Lord of Mysteries (2025)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         9.3/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="New Saga (2025)" href="https://cuevana3.rs/anime/new-saga">
-      <img alt="Cartel del anime New Saga (2025), héroe con espada y fondo de fantasía" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/7WAVcPVqdLK9whw75A7z6qeiuCg.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        New Saga (2025)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         10/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Nyaight of the Living Cat (2025)" href="https://cuevana3.rs/anime/nyaight-of-the-living-cat">
-      <img alt="Cartel del anime Nyaight of the Living Cat (2025), gato con ojos brillantes en un fondo oscuro" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/xaiHM6xiEAcjuBSww2rUZ3ZaQM.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Nyaight of the Living Cat (2025)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         8/10
-        </span>
-       </div>
-      </div>
-     </a>
-    </section>
-    <section aria-labelledby="tab-doramas" class="tab-panel hidden mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6" id="panel-doramas" role="tabpanel" tabindex="0">
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="¡Doona! (2023)" href="https://cuevana3.rs/serie/doona">
-      <img alt="Cartel del dorama ¡Doona! (2023), retrato de una mujer sonriente con fondo urbano" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/uVJgd0E3CYfcGLz9jdUwwyRbySX.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        ¡Doona! (2023)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         9.5/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Nam-soon, una chica superfuerte (2023)" href="https://cuevana3.rs/serie/nam-soon-una-chica-superfuerte">
-      <img alt="Cartel del dorama Nam-soon, una chica superfuerte (2023), mujer fuerte con expresión decidida" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/mS99X55DiwWqnExJMfs5m25a2ZQ.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Nam-soon, una chica superfuerte (2023)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         7.5/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="Tu tiempo llama (2023)" href="https://cuevana3.rs/serie/tu-tiempo-llama">
-      <img alt="Cartel del dorama Tu tiempo llama (2023), reloj antiguo con fondo nostálgico" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/4SdQT2FQlls9mTTDT4h8ERTt4ys.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        Tu tiempo llama (2023)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         8.2/10
-        </span>
-       </div>
-      </div>
-     </a>
-     <a class="group block rounded-lg bg-[#1c1c1c] shadow-lg overflow-hidden hover:shadow-cyan-500/50 transition" data-title="A la caza de espíritus malignos (2020)" href="https://cuevana3.rs/serie/a-la-caza-de-espiritus-malignos">
-      <img alt="Cartel del dorama A la caza de espíritus malignos (2020), figura oscura en bosque tenebroso" class="w-full h-auto object-cover" height="200" loading="lazy" src="https://image.tmdb.org/t/p/w154/qKO8ZSEwq50EGk3BeAh8J9Gr34K.jpg" width="120"/>
-      <div class="p-3">
-       <p class="text-gray-200 font-semibold truncate">
-        A la caza de espíritus malignos (2020)
-       </p>
-       <div class="flex items-center mt-1 text-yellow-400">
-        <i class="fas fa-star mr-1">
-        </i>
-        <span class="text-sm font-medium">
-         8.543/10
-        </span>
-       </div>
-      </div>
-     </a>
-    </section>
-   </div>
-  </main>
-  <!-- Footer -->
-  <footer class="bg-[#1c1c1c] text-gray-400 text-center py-6 select-none">
-   <p>
-    Copyright © 2025
-    <strong class="text-cyan-400">
-     Clan ORG
-    </strong>
-   </p>
-  </footer>
+    </div>
+  </div>
+
   <script>
-   // Tabs functionality
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabPanels = document.querySelectorAll('.tab-panel');
+    // Data: movies and series with multiple platforms and genres (arrays)
+    const items = [
+      {
+        id: "308447",
+        title: "Los Picapiedra & WWE: SmackDown en la Edad de Piedra",
+        genres: ["Animación", "Comedia", "Familia", "Aventura"],
+        year: 2015,
+        platforms: ["Max HBO", "Apple TV", "Prime video"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//sEC1hwyG7pJaUazMtiroc31e3gK.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/ch8GhTAbEe7xndEuQWSeJf9QyqM.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/los-picapiedra-wwe-smackdown-en-la-edad.html?m=1"
+      },
+      {
+        id: "210947",
+        title: "La aflicción",
+        genres: ["Terror", "Suspenso"],
+        year: 2014,
+        platforms: ["Movistar TV", "Prime video", "Apple TV"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//bMkRWgAvwe0XkpL8swG7UA4N4Q8.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/5df2SlPsS3qy2ingji1Wf1sCMO.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/la-afliccion-2014.html?m=1"
+      },
+      {
+        id: "854",
+        title: "La Máscara",
+        genres: ["Romance", "Comedia", "Crimen", "Fantasia"],
+        year: 1994,
+        platforms: ["Prime video", "Apple TV", "Max HBO"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//xbbXp9px4o8Oe7IbGd0yIbla8mZ.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/80uHK2xWwjlOxmfJ1wQB09omAht.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/la-mascara-1994.html?m=1"
+      },
+      {
+        id: "224141",
+        title: "En el bosque",
+        genres: ["Fantasia", "Comedia", "Romance"],
+        year: 2014,
+        platforms: ["Disney", "Prime video"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//nf27raN8XSqYWAaaRFnlfU8uTws.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/qF938YRj7RoYkjwOsXFDNYf907J.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/en-el-bosque-2014.html?m=1"
+      },
+      {
+        id: "228970",
+        title: "Alma Salvaje",
+        genres: ["Drama"],
+        year: 2014,
+        platforms: ["Disney", "Prime video"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//95HIDefwG7xIzbPXABJdZCZUdQ2.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/wlP3Sjw5WVvjsi2CGFp84QwrZZC.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/alma-salvaje-2014.html?m=1"
+      },
+      {
+        id: "537655",
+        title: "Corazón de Dragón 3: La maldición del brujo",
+        genres: ["Fantasia"],
+        year: 2015,
+        platforms: ["Claro video", "Apple TV", "Prime video"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//e9qdSmhab3Zit9Xy8deMVrKrb3U.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/rbA4CkeT2ag0RksiIbHSlQnqZRv.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/corazon-de-dragon-3-la-maldicion-del.html?m=1"
+      },
+      {
+        id: "265195",
+        title: "Relatos Salvajes",
+        genres: ["Drama", "Suspenso", "Comedia"],
+        year: 2014,
+        platforms: ["Movistar TV", "Prime video", "Apple TV", "Claro video", "Max HBO"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//vimbRR5XdkMj7CqnzVN92Cla8jN.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/dHnki2Dh6lbOtfksrh8H5lg08f5.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/relatos-salvajes-2014.html?m=1"
+      },
+      {
+        id: "10895",
+        title: "Pinocho",
+        genres: ["Animación", "Familia", "Fantasia"],
+        year: 1940,
+        platforms: ["Disney", "Prime video"],
+        type: "pelicula",
+        imgVertical: "https://image.tmdb.org/t/p/w300//sAluF7lNc4Mv3qxx1mmOgsfbr0C.jpg",
+        imgHorizontal: "https://image.tmdb.org/t/p/original/iFPpb2KIWKwBfyqSJivE4JegFPP.jpg",
+        link: "https://clan-org2.blogspot.com/2025/07/pinocho-1940.html?m=1"
+      },
+      {
+        id: "75379c43-4e6e-4dae-d605-e1b17d054e51",
+        title: "Intimate Forest",
+        genres: ["Drama"],
+        year: 2020,
+        platforms: ["Amazon Prime", "Netflix"],
+        type: "pelicula",
+        imgVertical: "https://storage.googleapis.com/a1aa/image/75379c43-4e6e-4dae-d605-e1b17d054e51.jpg",
+        imgHorizontal: "https://placehold.co/500x300/png?text=Intimate+Forest+Horizontal",
+        link: "https://www.themoviedb.org/movie/75379c43-4e6e-4dae-d605-e1b17d054e51"
+      },
+      {
+        id: "18d3e7fd-798f-454c-2f19-046be1e9f522",
+        title: "Anime Action",
+        genres: ["Animación", "Acción"],
+        year: 2023,
+        platforms: ["Crunchyroll"],
+        type: "pelicula",
+        imgVertical: "https://storage.googleapis.com/a1aa/image/18d3e7fd-798f-454c-2f19-046be1e9f522.jpg",
+        imgHorizontal: "https://placehold.co/500x300/png?text=Anime+Action+Horizontal",
+        link: "https://www.themoviedb.org/movie/18d3e7fd-798f-454c-2f19-046be1e9f522"
+      },
+      // Series with vertical and horizontal images and links
+      {
+        id: "serie1",
+        title: "Serie 1",
+        genres: ["Drama", "Suspenso"],
+        year: 2022,
+        platforms: ["Netflix", "HBO Max"],
+        type: "serie",
+        imgVertical: "https://placehold.co/120x200/png?text=Serie+1+Vertical",
+        imgHorizontal: "https://placehold.co/500x300/png?text=Serie+1+Horizontal",
+        link: "https://www.themoviedb.org/tv/serie1"
+      },
+      {
+        id: "serie2",
+        title: "Serie 2",
+        genres: ["Comedia"],
+        year: 2021,
+        platforms: ["HBO Max"],
+        type: "serie",
+        imgVertical: "https://placehold.co/120x200/png?text=Serie+2+Vertical",
+        imgHorizontal: "https://placehold.co/500x300/png?text=Serie+2+Horizontal",
+        link: "https://www.themoviedb.org/tv/serie2"
+      },
+      {
+        id: "serie3",
+        title: "Serie 3",
+        genres: ["Suspenso", "Drama"],
+        year: 2023,
+        platforms: ["Amazon Prime"],
+        type: "serie",
+        imgVertical: "https://placehold.co/120x200/png?text=Serie+3+Vertical",
+        imgHorizontal: "https://placehold.co/500x300/png?text=Serie+3+Horizontal",
+        link: "https://www.themoviedb.org/tv/serie3"
+      },
+      {
+        id: "serie4",
+        title: "Serie 4",
+        genres: ["Fantasía", "Aventura"],
+        year: 2022,
+        platforms: ["Disney+"],
+        type: "serie",
+        imgVertical: "https://placehold.co/120x200/png?text=Serie+4+Vertical",
+        imgHorizontal: "https://placehold.co/500x300/png?text=Serie+4+Horizontal",
+        link: "https://www.themoviedb.org/tv/serie4"
+      },
+      {
+        id: "serie5",
+        title: "Serie 5",
+        genres: ["Acción", "Comedia"],
+        year: 2023,
+        platforms: ["Netflix"],
+        type: "serie",
+        imgVertical: "https://placehold.co/120x200/png?text=Serie+5+Vertical",
+        imgHorizontal: "https://placehold.co/500x300/png?text=Serie+5+Horizontal",
+        link: "https://www.themoviedb.org/tv/serie5"
+      },
+    ];
 
-    tabButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const target = button.getAttribute('data-tab');
+    // Pagination config
+    const ITEMS_PER_PAGE = 24;
+    let currentPage = 1;
 
-        tabButtons.forEach((btn) => {
-          btn.classList.remove('border-cyan-400', 'text-cyan-400', 'font-semibold');
-          btn.classList.add('text-gray-400');
-          btn.setAttribute('aria-selected', 'false');
-          btn.setAttribute('tabindex', '-1');
-        });
+    // State
+    let currentFilterType = "all"; // all, pelicula, serie
+    let currentSearch = "";
+    let currentPlatform = "";
+    let currentGenre = "";
+    let currentYear = "";
+    let expandedId = null; // id of expanded item in grid
 
-        tabPanels.forEach((panel) => {
-          panel.classList.add('hidden');
-        });
+    // Elements
+    const grid = document.getElementById("grid");
+    const swiper = document.getElementById("swiper");
+    const btnHome = document.getElementById("btnHome");
+    const btnPeliculas = document.getElementById("btnPeliculas");
+    const btnSeries = document.getElementById("btnSeries");
+    const countPeliculas = document.getElementById("countPeliculas");
+    const countSeries = document.getElementById("countSeries");
+    const countHome = document.getElementById("countHome");
+    const searchInput = document.getElementById("searchInput");
+    const filterPlataforma = document.getElementById("filterPlataforma");
+    const filterGenero = document.getElementById("filterGenero");
+    const filterAno = document.getElementById("filterAno");
+    const pagination = document.getElementById("pagination");
+    const pageDisplay = document.getElementById("pageDisplay");
+    const prevPageBtn = document.getElementById("prevPage");
+    const nextPageBtn = document.getElementById("nextPage");
 
-        button.classList.add('border-cyan-400', 'text-cyan-400', 'font-semibold');
-        button.classList.remove('text-gray-400');
-        button.setAttribute('aria-selected', 'true');
-        button.setAttribute('tabindex', '0');
-
-        const activePanel = document.getElementById(`panel-${target}`);
-        if (activePanel) {
-          activePanel.classList.remove('hidden');
-          activePanel.focus();
+    // Populate filter options dynamically with multi-values support
+    function populateFilters() {
+      // Platforms: gather all unique platforms from all items (flatten arrays)
+      const platformsSet = new Set();
+      items.forEach(item => {
+        if (Array.isArray(item.platforms)) {
+          item.platforms.forEach(p => platformsSet.add(p));
+        } else if (item.platform) {
+          platformsSet.add(item.platform);
         }
       });
-    });
+      const platforms = Array.from(platformsSet).sort();
+      filterPlataforma.innerHTML =
+        '<option value="">Plataforma</option>' +
+        platforms.map((p) => `<option value="${p}">${p}</option>`).join("");
 
-    // Search filter functionality
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase().trim();
-      const allItems = document.querySelectorAll('.tab-panel a');
-
-      allItems.forEach((item) => {
-        const title = item.getAttribute('data-title').toLowerCase();
-        if (title.includes(query)) {
-          item.classList.remove('hidden');
-        } else {
-          item.classList.add('hidden');
+      // Genres: gather all unique genres from all items (flatten arrays)
+      const genresSet = new Set();
+      items.forEach(item => {
+        if (Array.isArray(item.genres)) {
+          item.genres.forEach(g => genresSet.add(g));
+        } else if (item.genre) {
+          genresSet.add(item.genre);
         }
       });
-    });
+      const genres = Array.from(genresSet).sort();
+      filterGenero.innerHTML =
+        '<option value="">Género</option>' +
+        genres.map((g) => `<option value="${g}">${g}</option>`).join("");
+
+      // Years
+      const years = Array.from(
+        new Set(items.map((i) => i.year).filter(Boolean))
+      )
+        .sort((a, b) => b - a)
+        .map(String);
+      filterAno.innerHTML =
+        '<option value="">Año</option>' +
+        years.map((y) => `<option value="${y}">${y}</option>`).join("");
+    }
+
+    // Helper: check if item matches platform filter (multi-platform support)
+    function matchesPlatform(item, platform) {
+      if (!platform) return true;
+      if (Array.isArray(item.platforms)) {
+        return item.platforms.includes(platform);
+      }
+      if (item.platform) {
+        return item.platform === platform;
+      }
+      return false;
+    }
+
+    // Helper: check if item matches genre filter (multi-genre support)
+    function matchesGenre(item, genre) {
+      if (!genre) return true;
+      if (Array.isArray(item.genres)) {
+        return item.genres.includes(genre);
+      }
+      if (item.genre) {
+        return item.genre === genre;
+      }
+      return false;
+    }
+
+    // Filter items based on current filters and search with multi-values support
+    function filterItems() {
+      return items.filter((item) => {
+        // Filter by type
+        if (currentFilterType === "pelicula" && item.type !== "pelicula")
+          return false;
+        if (currentFilterType === "serie" && item.type !== "serie") return false;
+
+        // Filter by search (title)
+        if (
+          currentSearch &&
+          !item.title.toLowerCase().includes(currentSearch.toLowerCase())
+        )
+          return false;
+
+        // Filter by platform (multi)
+        if (!matchesPlatform(item, currentPlatform)) return false;
+
+        // Filter by genre (multi)
+        if (!matchesGenre(item, currentGenre)) return false;
+
+        // Filter by year
+        if (currentYear && String(item.year) !== currentYear) return false;
+
+        return true;
+      });
+    }
+
+    // Render grid with filtered items (vertical images 120x200) with pagination only if not Home
+    function renderGrid() {
+      const filtered = filterItems();
+      let pageItems = filtered;
+      let totalPages = 1;
+      if (currentFilterType !== "all") {
+        totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        pageItems = filtered.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+        pagination.style.display = "flex";
+      } else {
+        // Home: show all filtered, no pagination
+        currentPage = 1;
+        pagination.style.display = "none";
+      }
+
+      grid.innerHTML = pageItems
+        .map((item) => {
+          const isExpanded = expandedId === item.id;
+          // Join genres and platforms for display
+          const genresText = Array.isArray(item.genres) ? item.genres.join(", ") : (item.genre || "");
+          const platformsText = Array.isArray(item.platforms) ? item.platforms.join(", ") : (item.platform || "");
+          return `
+        <article
+          class="relative rounded-xl overflow-hidden shadow-lg bg-black cursor-pointer transition-all duration-300"
+          style="width: 120px; height: 200px;"
+          data-id="${item.id}"
+          data-title="${item.title}"
+          data-genres="${genresText}"
+          data-year="${item.year}"
+          data-platforms="${platformsText}"
+          data-type="${item.type}"
+          data-img="${item.imgVertical}"
+          tabindex="0"
+        >
+          <img
+            src="${item.imgVertical}"
+            alt="${item.title} poster vertical"
+            class="w-full h-full object-cover rounded-xl"
+            loading="lazy"
+          />
+          <span
+            class="absolute top-1 right-1 bg-[#22ff22] text-black text-[9px] font-bold rounded px-1 py-0.5 select-none"
+          >
+            ${item.type === "pelicula" ? "PELÍCULA" : "SERIE"}
+          </span>
+          ${
+            isExpanded
+              ? `<div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-90 p-2 text-xs space-y-1 rounded-b-xl">
+                  <h3 class="font-bold truncate">${item.title}</h3>
+                  <p>Género: ${genresText}</p>
+                  <p>Plataforma: ${platformsText}</p>
+                  <p>Año: ${item.year}</p>
+                  <button
+                    class="mt-1 w-full bg-[#22ff22] text-black font-bold rounded py-1 hover:bg-green-600 transition"
+                    onclick="event.stopPropagation(); window.open('${item.link}', '_blank')"
+                  >
+                    Ver
+                  </button>
+                </div>`
+              : ""
+          }
+        </article>
+      `;
+        })
+        .join("");
+      attachGridClickEvents();
+      if (currentFilterType !== "all") {
+        renderPagination(totalPages);
+      }
+      updateHomeCount(filtered.length);
+    }
+
+    // Render pagination with page info and next arrow
+    function renderPagination(totalPages) {
+      if (totalPages <= 1) {
+        pageDisplay.textContent = "";
+        prevPageBtn.disabled = true;
+        nextPageBtn.disabled = true;
+        return;
+      }
+      pageDisplay.textContent = `${currentPage} de ${totalPages}`;
+      prevPageBtn.disabled = currentPage === 1;
+      nextPageBtn.disabled = currentPage === totalPages;
+    }
+
+    // Render swiper with first 5 filtered items (horizontal images 500x300)
+    // Swiper shows peliculas and series horizontal images, but different from grid
+    function renderSwiper() {
+      // Get first 5 filtered items (different from expanded grid items)
+      // To avoid same images in swiper and grid, exclude expandedId from swiper
+      // If no expandedId, just take first 5 filtered items
+      let filtered = filterItems();
+      if (expandedId) {
+        filtered = filtered.filter((i) => i.id !== expandedId);
+      }
+      filtered = filtered.slice(0, 5);
+
+      swiper.innerHTML = filtered
+        .map(
+          (item) => {
+            const genresText = Array.isArray(item.genres) ? item.genres.join(", ") : (item.genre || "");
+            const platformsText = Array.isArray(item.platforms) ? item.platforms.join(", ") : (item.platform || "");
+            return `
+        <div
+          class="flex-shrink-0 rounded-xl overflow-hidden relative snap-start"
+          style="width: 450px; height: 300px;"
+          data-id="${item.id}"
+          data-title="${item.title}"
+          data-genres="${genresText}"
+          data-year="${item.year}"
+          data-platforms="${platformsText}"
+          data-type="${item.type}"
+          data-img="${item.imgHorizontal}"
+          tabindex="0"
+        >
+          <img
+            src="${item.imgHorizontal}"
+            alt="${item.title} poster horizontal"
+            class="w-full h-full object-cover rounded-xl cursor-pointer"
+            loading="lazy"
+          />
+          <span
+            class="absolute top-2 right-2 bg-[#22ff22] text-black text-xs font-bold rounded px-2 py-0.5 select-none"
+          >
+            ${item.type === "pelicula" ? "PELÍCULA" : "SERIE"}
+          </span>
+          <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-80 p-2 text-xs space-y-1 rounded-b-xl opacity-0 hover:opacity-100 transition-opacity cursor-default">
+            <h3 class="font-bold truncate">${item.title}</h3>
+            <p>Género: ${genresText}</p>
+            <p>Plataforma: ${platformsText}</p>
+            <p>Año: ${item.year}</p>
+            <button
+              class="mt-1 w-full bg-[#22ff22] text-black font-bold rounded py-1 hover:bg-green-600 transition"
+              onclick="event.stopPropagation(); window.open('${item.link}', '_blank')"
+            >
+              Ver
+            </button>
+          </div>
+        </div>
+      `;
+          }
+        )
+        .join("");
+      attachSwiperClickEvents();
+    }
+
+    // Update counts for peliculas and series
+    function updateCounts() {
+      const peliculasCount = items.filter((i) => i.type === "pelicula").length;
+      const seriesCount = items.filter((i) => i.type === "serie").length;
+      countPeliculas.textContent = peliculasCount;
+      countSeries.textContent = seriesCount;
+    }
+
+    // Update Home total count
+    function updateHomeCount(count) {
+      countHome.textContent = count;
+    }
+
+    // Attach click events to grid images
+    function attachGridClickEvents() {
+      const articles = grid.querySelectorAll("article");
+      articles.forEach((article) => {
+        article.onclick = () => {
+          const id = article.dataset.id;
+          if (expandedId === id) {
+            expandedId = null;
+          } else {
+            expandedId = id;
+          }
+          renderGrid();
+          renderSwiper();
+        };
+      });
+    }
+
+    // Attach click events to swiper images
+    function attachSwiperClickEvents() {
+      const divs = swiper.querySelectorAll("div");
+      divs.forEach((div) => {
+        div.onclick = () => {
+          // On swiper click, expand that item in grid and scroll to it
+          const id = div.dataset.id;
+          expandedId = id;
+          renderGrid();
+          renderSwiper();
+          // Scroll grid to the expanded item
+          const el = grid.querySelector(`article[data-id="${id}"]`);
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "center" });
+          }
+        };
+      });
+    }
+
+    // Pagination buttons events
+    prevPageBtn.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        expandedId = null;
+        renderGrid();
+        renderSwiper();
+      }
+    };
+    nextPageBtn.onclick = () => {
+      const filtered = filterItems();
+      const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+      if (currentPage < totalPages) {
+        currentPage++;
+        expandedId = null;
+        renderGrid();
+        renderSwiper();
+      }
+    };
+
+    // Event listeners for buttons
+    btnHome.onclick = () => {
+      currentFilterType = "all";
+      currentPage = 1;
+      expandedId = null;
+      updateUI();
+    };
+    btnPeliculas.onclick = () => {
+      currentFilterType = "pelicula";
+      currentPage = 1;
+      expandedId = null;
+      updateUI();
+    };
+    btnSeries.onclick = () => {
+      currentFilterType = "serie";
+      currentPage = 1;
+      expandedId = null;
+      updateUI();
+    };
+
+    // Event listeners for search and filters
+    searchInput.oninput = (e) => {
+      currentSearch = e.target.value.trim();
+      currentPage = 1;
+      expandedId = null;
+      updateUI();
+    };
+    filterPlataforma.onchange = (e) => {
+      currentPlatform = e.target.value;
+      currentPage = 1;
+      expandedId = null;
+      updateUI();
+    };
+    filterGenero.onchange = (e) => {
+      currentGenre = e.target.value;
+      currentPage = 1;
+      expandedId = null;
+      updateUI();
+    };
+    filterAno.onchange = (e) => {
+      currentYear = e.target.value;
+      currentPage = 1;
+      expandedId = null;
+      updateUI();
+    };
+
+    // Update UI: grid, swiper, counts
+    function updateUI() {
+      renderGrid();
+      renderSwiper();
+      updateCounts();
+      updateActiveButtons();
+    }
+
+    // Update active button styles
+    function updateActiveButtons() {
+      [btnHome, btnPeliculas, btnSeries].forEach((btn) =>
+        btn.classList.remove("bg-gray-900")
+      );
+      if (currentFilterType === "all") {
+        btnHome.classList.add("bg-gray-900");
+      } else if (currentFilterType === "pelicula") {
+        btnPeliculas.classList.add("bg-gray-900");
+      } else if (currentFilterType === "serie") {
+        btnSeries.classList.add("bg-gray-900");
+      }
+    }
+
+    // Auto scroll swiper horizontally one by one
+    let swiperIndex = 0;
+    function autoScrollSwiper() {
+      const slides = swiper.children;
+      if (slides.length === 0) return;
+      swiperIndex = (swiperIndex + 1) % slides.length;
+      const slide = slides[swiperIndex];
+      swiper.scrollTo({
+        left: slide.offsetLeft,
+        behavior: "smooth",
+      });
+    }
+    setInterval(autoScrollSwiper, 4000);
+
+    // Initialize
+    populateFilters();
+    updateUI();
   </script>
- </body>
+</body>
 </html>
